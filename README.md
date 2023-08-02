@@ -24,3 +24,17 @@ To run the backend application
 $ cd back_end
 $ go run test_assessment
 ```
+
+to run test cases
+
+```sh
+$ cd back_end/service
+$ go test ./...
+```
+To run front end
+```sh
+$ cd front_end
+$ npm install
+$ npm run dev
+
+```

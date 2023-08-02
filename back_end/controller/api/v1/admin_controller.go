@@ -130,10 +130,11 @@ func (AdminAPIV1) GetUsers(c *gin.Context) {
 	response := schema.GetUserResponse{Total: user.Total}
 	for _, user := range user.Users {
 		response.Users = append(response.Users, schema.User{
-			Id:       user.Id,
-			Name:     user.Name,
-			Email:    user.Email,
-			UserRole: user.UserRole,
+			Id:        user.Id,
+			Name:      user.Name,
+			Email:     user.Email,
+			UserRole:  user.UserRole,
+			CreatedAt: user.CreatedAt,
 		})
 	}
 	appG.Response(http.StatusOK, response)

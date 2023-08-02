@@ -2,6 +2,7 @@ package services
 
 import (
 	"net/http"
+	"net/mail"
 	"strings"
 	domainModel "test_assessment/domain/model"
 	"test_assessment/domain/repository"
@@ -44,6 +45,14 @@ func (a AdminService) Logout(token string, userId uint) error {
 }
 
 func (a AdminService) CreateUser(input models.CreateUserInput) (models.CreateUserOutput, error) {
+	if !isStringValid(input.Password) {
+		return models.CreateUserOutput{}, ErrorResponse{Code: http.StatusInternalServerError, ResponseMessage: resources.InternalServerError,
+			ErrorString: resources.ClientError}
+	}
+	if _, ok := mail.ParseAddress(input.Email); ok != nil {
+		return models.CreateUserOutput{}, ErrorResponse{Code: http.StatusInternalServerError, ResponseMessage: resources.InternalServerError,
+			ErrorString: resources.ClientError}
+	}
 	hashPassword, err := a.passwordManager.Hash(input.Password)
 	if err != nil {
 		a.logger.LogError(err)

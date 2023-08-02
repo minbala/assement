@@ -24,7 +24,10 @@ func InitRouter() *gin.Engine {
 	r := gin.New()
 	r.Use(gin.Logger())
 	r.Use(gin.Recovery())
-	r.Use(cors.Default())
+	corsPolicy := cors.DefaultConfig()
+	corsPolicy.AllowHeaders = append(corsPolicy.AllowHeaders, "Authorization")
+	corsPolicy.AllowAllOrigins = true
+	r.Use(cors.New(corsPolicy))
 	docs.SwaggerInfo.BasePath = "/"
 	r.GET("/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	r.GET("/ping", func(c *gin.Context) {

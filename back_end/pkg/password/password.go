@@ -42,7 +42,6 @@ func (a Argon2ID) Hash(plain string) (string, error) {
 	}
 
 	hash := argon2.IDKey([]byte(plain), salt, a.time, a.memory, a.threads, a.keyLen)
-
 	return fmt.Sprintf(
 			a.format,
 			a.version,
