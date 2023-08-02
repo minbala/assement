@@ -1,0 +1,400 @@
+definitions:
+  app.ResponseMessage:
+    properties:
+      message:
+        type: string
+    type: object
+  schema.CreateUserInput:
+    properties:
+      email:
+        type: string
+      name:
+        type: string
+      password:
+        type: string
+      userRole:
+        type: string
+    required:
+    - email
+    - name
+    - password
+    - userRole
+    type: object
+  schema.CreateUserResponse:
+    properties:
+      createdAt:
+        type: string
+      email:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      userRole:
+        type: string
+    required:
+    - email
+    - name
+    - userRole
+    type: object
+  schema.GetUserLogsResponse:
+    properties:
+      total:
+        type: integer
+      userLogs:
+        items:
+          $ref: '#/definitions/schema.UserLog'
+        type: array
+    type: object
+  schema.GetUserResponse:
+    properties:
+      total:
+        type: integer
+      users:
+        items:
+          $ref: '#/definitions/schema.User'
+        type: array
+    type: object
+  schema.LoginInput:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    required:
+    - email
+    type: object
+  schema.LoginResponse:
+    properties:
+      accessToken:
+        type: string
+    type: object
+  schema.UpdateUserInput:
+    properties:
+      email:
+        type: string
+      name:
+        type: string
+      password:
+        type: string
+      userId:
+        type: integer
+      userRole:
+        type: string
+    required:
+    - email
+    - userId
+    - userRole
+    type: object
+  schema.User:
+    properties:
+      createdAt:
+        type: string
+      email:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      userRole:
+        type: string
+    required:
+    - email
+    - name
+    - userRole
+    type: object
+  schema.UserLog:
+    properties:
+      createdAt:
+        type: string
+      errorMessage:
+        type: string
+      id:
+        type: integer
+      method:
+        type: string
+      requestUrl:
+        type: string
+      serviceType:
+        type: string
+      status:
+        type: string
+      userId:
+        type: integer
+    type: object
+externalDocs:
+  description: OpenAPI
+  url: https://swagger.io/resources/open-api/
+host: localhost:8080
+info:
+  contact:
+    email: minbala33@gmail.com
+    name: API Support
+    url: http://www.devxmm.com/support
+  description: AdminPanel Service API in Go using Gin framework
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: AdminPanel Service API
+  version: "1.0"
+paths:
+  /v1/login:
+    post:
+      consumes:
+      - application/json
+      description: User Login Version 1
+      parameters:
+      - description: Request body in JSON format
+        in: body
+        name: requestData
+        required: true
+        schema:
+          $ref: '#/definitions/schema.LoginInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/schema.LoginResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/app.ResponseMessage'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/app.ResponseMessage'
+      summary: User Login
+      tags:
+      - Authentication
+  /v1/logout:
+    delete:
+      consumes:
+      - application/json
+      description: User Logout Version 1
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/app.ResponseMessage'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/app.ResponseMessage'
+      security:
+      - Bearer: []
+      summary: User Logout
+      tags:
+      - Authentication
+  /v1/user:
+    get:
+      consumes:
+      - application/json
+      description: get users
+      parameters:
+      - description: bala
+        in: query
+        name: name
+        type: string
+      - description: user
+        in: query
+        name: user_role
+        type: string
+      - description: "20"
+        in: query
+        name: limit
+        type: integer
+      - description: "0"
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/schema.GetUserResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/app.ResponseMessage'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/app.ResponseMessage'
+      security:
+      - Bearer: []
+      summary: get users
+      tags:
+      - Admin
+    post:
+      consumes:
+      - application/json
+      description: create user account
+      parameters:
+      - description: Request body in JSON format
+        in: body
+        name: requestData
+        required: true
+        schema:
+          $ref: '#/definitions/schema.CreateUserInput'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/schema.CreateUserResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/app.ResponseMessage'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/app.ResponseMessage'
+      security:
+      - Bearer: []
+      summary: create user account
+      tags:
+      - Admin
+    put:
+      consumes:
+      - application/json
+      description: update user
+      parameters:
+      - description: Request body in JSON format
+        in: body
+        name: requestData
+        required: true
+        schema:
+          $ref: '#/definitions/schema.UpdateUserInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/app.ResponseMessage'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/app.ResponseMessage'
+      security:
+      - Bearer: []
+      summary: update user
+      tags:
+      - Admin
+  /v1/user-logs:
+    get:
+      consumes:
+      - application/json
+      description: get  user logs
+      parameters:
+      - description: "2"
+        in: query
+        name: user_id
+        type: integer
+      - description: "20"
+        in: query
+        name: limit
+        type: integer
+      - description: "0"
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/schema.GetUserLogsResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/app.ResponseMessage'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/app.ResponseMessage'
+      security:
+      - Bearer: []
+      summary: get  user logs
+      tags:
+      - Admin
+  /v1/user/{userId}:
+    delete:
+      consumes:
+      - application/json
+      description: delete user
+      parameters:
+      - description: "2"
+        in: path
+        name: userId
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/app.ResponseMessage'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/app.ResponseMessage'
+      security:
+      - Bearer: []
+      summary: delete user
+      tags:
+      - Admin
+    get:
+      consumes:
+      - application/json
+      description: get  user
+      parameters:
+      - description: "2"
+        in: path
+        name: userId
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/schema.User'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/app.ResponseMessage'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/app.ResponseMessage'
+      security:
+      - Bearer: []
+      summary: get  user
+      tags:
+      - Admin
+securityDefinitions:
+  Bearer:
+    description: Type "Bearer" followed by a space and JWT token.
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

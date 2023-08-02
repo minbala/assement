@@ -1,0 +1,18 @@
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] GET    /docs/*any                --> github.com/swaggo/gin-swagger.CustomWrapHandler.func1 (4 handlers)
+[GIN-debug] GET    /ping                     --> test_assessment/controller.InitRouter.func1 (4 handlers)
+[GIN-debug] POST   /v1/login                 --> test_assessment/controller/api/v1.PublicAPIV1.UserLoginV1-fm (4 handlers)
+[GIN-debug] DELETE /v1/logout                --> test_assessment/controller/api/v1.AdminAPIV1.UserLogoutV1-fm (5 handlers)
+[GIN-debug] PUT    /v1/user                  --> test_assessment/controller/api/v1.AdminAPIV1.UpdateUser-fm (5 handlers)
+[GIN-debug] DELETE /v1/user/:userId          --> test_assessment/controller/api/v1.AdminAPIV1.DeleteUserById-fm (5 handlers)
+[GIN-debug] POST   /v1/user                  --> test_assessment/controller/api/v1.AdminAPIV1.CreateUser-fm (5 handlers)
+[GIN-debug] GET    /v1/user                  --> test_assessment/controller/api/v1.AdminAPIV1.GetUsers-fm (5 handlers)
+[GIN-debug] GET    /v1/user/:userId          --> test_assessment/controller/api/v1.AdminAPIV1.GetUserById-fm (5 handlers)
+[GIN-debug] GET    /v1/user-logs             --> test_assessment/controller/api/v1.AdminAPIV1.GetUserLogs-fm (5 handlers)
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on :8080
+[GIN] 2023/08/02 - 14:01:13 | 401 |     158.907µs |       127.0.0.1 | POST     "/v1/user"
